@@ -1,1 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home IoT System - Siddarth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
+        body {
+            background: #FFFFFF;
+            color: #000000;
+            overflow-x: hidden;
+        }
+
+        /* Navigation (unchanged) */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #FFFFFF;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo-container img {
+            width: 40px;
+            height: 40px;
+            margin-right: 12px;
+        }
+
+        nav .logo-container .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 35px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 600;
+            font-size: 16px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav ul li a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: #FF6200;
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #FF6200;
+        }
+
+        nav ul li a:hover::before {
+            width: 100%;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 26px;
+            color: #000000;
+            cursor: pointer;
+        }
+
+        /* Animation Keyframes (unchanged) */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleUp {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-10deg); opacity: 0; }
+            to { transform: rotate(0); opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: translateY(-50px); opacity: 0; }
+            60% { transform: translateY(10px); opacity: 0.7; }
+            80% { transform: translateY(-5px); opacity: 0.9; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.2); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes showFallback {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Hero Section (unchanged) */
+        .hero {
+            padding: 120px 60px 80px;
+            background: #F9F9F9;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        .hero .content {
+            max-width: 1100px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero .text {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 700;
+            color: #000000;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #333333;
+            line-height: 1.7;
+            max-width: 500px;
+        }
+
+        .hero .image-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero .image-container img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .hero .image-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .hero .image-container::after {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 80px;
+            height: 80px;
+            background: #FF6200;
+            opacity: 0.2;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        /* Demo Section (unchanged) */
+        .demo-section {
+            padding: 100px 60px;
+            background: #FFFFFF;
+            text-align: center;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        .demo-section h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FF6200;
+            margin-bottom: 50px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .demo-card {
+            background: #F9F9F9;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .demo-header {
+            background: #E0E0E0;
+            padding: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .demo-header .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot.red { background: #FF605C; }
+        .dot.yellow { background: #FFBD44; }
+        .dot.green { background: #00CA4E; }
+
+        .demo-content {
+            height: 400px;
+            position: relative;
+        }
+
+        .demo-image {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: top;
+        }
+
+        .demo-expand {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #FFFFFF;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .demo-expand:hover {
+            background: #FF6200;
+        }
+
+        /* Modal Styles */
+        .demo-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .demo-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: #FFFFFF;
+            border-radius: 15px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            background: #E0E0E0;
+            padding: 10px 60px 10px 20px; /* Increased right padding to avoid close button overlap */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-header-left img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .modal-header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Increased gap for spacing */
+            font-size: 14px;
+            color: #333333;
+            padding-right: 10px; /* Extra padding to shift left */
+        }
+
+        .modal-header-right .made-by {
+            font-weight: 600;
+        }
+
+        .modal-header-right .visitor-count,
+        .modal-header-right .like-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .like-button {
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .like-button i.fas {
+            color: #FF6200;
+        }
+
+        .like-button i.far {
+            color: #333333;
+        }
+
+        .like-button:hover i {
+            color: #FF6200;
+        }
+
+        #modal-iframe {
+            width: 100%;
+            height: calc(90vh - 50px); /* Adjust for header */
+            border: none;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Adjusted to give more space */
+            color: #FFFFFF;
+            background: #FF6200;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: #000000;
+        }
+
+        /* Project Details Section (unchanged) */
+        .project-details {
+            padding: 100px 60px;
+            background: #FFFFFF;
+            position: relative;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        .project-details h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FF6200;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .project-details .content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .project-details .card {
+            flex: 1;
+            min-width: 300px;
+            background: #F9F9F9;
+            padding: 40px;
+            border-radius: 0 20px 20px 20px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .project-details .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-details .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: #FF6200;
+        }
+
+        .project-details .card h3 {
+            font-size: 26px;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .project-details .card p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .project-details .card ul {
+            list-style: none;
+        }
+
+        .project-details .card ul li {
+            font-size: 16px;
+            color: #333333;
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
+            transition: color 0.3s;
+        }
+
+        .project-details .card ul li:hover {
+            color: #FF6200;
+        }
+
+        .project-details .card ul li::before {
+            content: '\f0e7';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #FF6200;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 18px;
+        }
+
+        /* Technical Details Section (unchanged) */
+        .technical-details {
+            padding: 100px 60px;
+            background: #F9F9F9;
+            text-align: center;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        .technical-details h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FF6200;
+            margin-bottom: 50px;
+        }
+
+        .technical-details .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .technical-details .tech-item {
+            background: #FFFFFF;
+            padding: 30px;
+            border-radius: 20px 0 20px 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .technical-details .tech-item:hover {
+            background: #FF6200;
+            transform: scale(1.1);
+        }
+
+        .technical-details .tech-item:hover i,
+        .technical-details .tech-item:hover p {
+            color: #FFFFFF;
+        }
+
+        .technical-details .tech-item i {
+            font-size: 40px;
+            color: #FF6200;
+            margin-bottom: 15px;
+            transition: color 0.3s;
+        }
+
+        .technical-details .tech-item p {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            transition: color 0.3s;
+        }
+
+        /* Pricing Calculator Section (unchanged) */
+        .pricing-calculator {
+            padding: 100px 60px;
+            background: #FFFFFF;
+            text-align: center;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        .pricing-calculator h2 {
+            font-size: 40px;
+            font-weight: 700;
+            color: #FF6200;
+            margin-bottom: 50px;
+        }
+
+        .pricing-calculator form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pricing-calculator label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            text-align: left;
+        }
+
+        .pricing-calculator select {
+            padding: 15px;
+            border: 2px solid #FF6200;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: none;
+            background: #FFFFFF;
+            color: #333333;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .pricing-calculator select:focus {
+            border-color: #000000;
+        }
+
+        /* Toggle Buttons (unchanged) */
+        .toggle-group {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .toggle-group input[type="radio"] {
+            display: none;
+        }
+
+        .toggle-group label {
+            padding: 10px 20px;
+            border: 2px solid #FF6200;
+            border-radius: 5px;
+            font-size: 16px;
+            color: #333333;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s;
+            text-align: center;
+            flex: 1;
+        }
+
+        .toggle-group input[type="radio"]:checked + label {
+            background: #FF6200;
+            color: #FFFFFF;
+        }
+
+        .toggle-group label:hover {
+            background: #FFF3E8;
+        }
+
+        /* Price Display Box (unchanged) */
+        .price-display-box {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: #FFF3E8;
+            border: 2px solid #FF6200;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 24px;
+            font-weight: 600;
+            color: #FF6200;
+            text-align: center;
+        }
+
+        /* Book a Call Button (unchanged) */
+        .book-call {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 18px 50px;
+            background: #FF6200;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .book-call:hover {
+            background: #000000;
+            transform: translateY(-5px);
+        }
+
+        .book-call:focus {
+            outline: 2px solid #FF6200;
+            outline-offset: 2px;
+        }
+
+        /* Call to Action (unchanged) */
+        .cta-section {
+            padding: 80px 60px;
+            text-align: center;
+            background: #FFFFFF;
+            position: relative;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 15%;
+            width: 120px;
+            height: 120px;
+            background: #FF6200;
+            opacity: 0.15;
+            border-radius: 20px;
+            transform: rotate(30deg);
+            z-index: 0;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .cta {
+            padding: 18px 50px;
+            background: #FF6200;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s, transform 0.3s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section .cta:hover {
+            background: #000000;
+            transform: translateY(-5px);
+        }
+
+        .cta-section .cta:focus {
+            outline: 2px solid #FF6200;
+            outline-offset: 2px;
+        }
+
+        /* Footer (unchanged) */
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: #000000;
+            color: #FFFFFF;
+            opacity: 0;
+            animation: showFallback 1s ease forwards 2s;
+        }
+
+        footer p {
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 15px 20px;
+            }
+
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background: #FFFFFF;
+                padding: 20px;
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 100px 20px 60px;
+                min-height: 70vh;
+            }
+
+            .hero .content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .hero p {
+                font-size: 16px;
+                max-width: 100%;
+            }
+
+            .hero .image-container img {
+                max-width: 100%;
+            }
+
+            .demo-section, .project-details, .technical-details, .pricing-calculator, .cta-section {
+                padding: 60px 20px;
+            }
+
+            .demo-section h2, .project-details h2, .technical-details h2, .pricing-calculator h2 {
+                font-size: 32px;
+            }
+
+            .cta-section h2 {
+                font-size: 28px;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-content {
+                height: 300px;
+            }
+
+            .modal-content {
+                width: 95%;
+                max-height: 80vh;
+            }
+
+            #modal-iframe {
+                height: calc(80vh - 60px); /* Adjust for header */
+            }
+
+            .modal-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 10px 50px 10px 20px; /* Adjusted for mobile */
+            }
+
+            .modal-header-right {
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                gap: 15px; /* Slightly reduced for mobile */
+                padding-right: 0;
+            }
+
+            .modal-close {
+                right: 10px; /* Keep same position */
+            }
+
+            .project-details .content {
+                flex-direction: column;
+            }
+
+            .technical-details .tech-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-calculator form {
+                max-width: 100%;
+            }
+
+            .pricing-calculator select {
+                font-size: 14px;
+            }
+
+            .toggle-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .toggle-group label {
+                font-size: 14px;
+                padding: 8px 15px;
+            }
+
+            .price-display-box {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
+
+            .book-call {
+                font-size: 16px;
+                padding: 15px 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (unchanged) -->
+    <nav>
+        <div class="logo-container">
+            <img src="logo1.png" alt="Siddarth Logo">
+            <div class="logo">Siddarth</div>
+        </div>
+        <div class="mobile-toggle" aria-expanded="false" aria-label="Toggle navigation menu">☰</div>
+        <ul id="nav-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#demo-section">Demos</a></li>
+            <li><a href="#pricing-calculator">Pricing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section (unchanged) -->
+    <section id="home" class="hero">
+        <div class="content">
+            <div class="text">
+                <h1>Smart Home IoT System</h1>
+                <p>Transform your home with intelligent automation, controlling lights, appliances, and security through a sleek mobile app.</p>
+            </div>
+            <div class="image-container">
+                <img src="images1.jpg" alt="Smart Home IoT System Preview">
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section (unchanged) -->
+    <section id="demo-section" class="demo-section">
+        <h2>Website Demos</h2>
+        <div class="demo-grid">
+            <div class="demo-card" aria-label="Website demo 1">
+                <div class="demo-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="demo-content">
+                    <div class="demo-image" style="background-image: url('demo1.png');"></div>
+                    <i class="fas fa-expand-alt demo-expand" data-url="https://sidduspace.github.io/sp_enterprises/" data-demo-id="demo1" aria-label="Expand demo 1"></i>
+                </div>
+            </div>
+            <div class="demo-card" aria-label="Website demo 2">
+                <div class="demo-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="demo-content">
+                    <div class="demo-image" style="background-image: url('demo3.png');"></div>
+                    <i class="fas fa-expand-alt demo-expand" data-url="https://example.org" data-demo-id="demo2" aria-label="Expand demo 2"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section id="iot-solution" class="iot-solution">
+    <h2>A Simple IoT Solution</h2>
+    <div class="iot-grid">
+        <div class="iot-card" aria-label="Wireless Sensor">
+            <div class="ripple-container">
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+            </div>
+            <i class="fas fa-wifi iot-icon"></i>
+            <h3>Wireless Sensor</h3>
+        </div>
+        <div class="iot-card" aria-label="Cloud Connector">
+            <div class="ripple-container" style="animation-delay: 0.5s;">
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+            </div>
+            <i class="fas fa-cloud-upload-alt iot-icon"></i>
+            <h3>Cloud Connector</h3>
+        </div>
+        <div class="iot-card" aria-label="API/Cloud">
+            <div class="ripple-container" style="animation-delay: 1s;">
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+            </div>
+            <i class="fas fa-code-branch iot-icon"></i>
+            <h3>API</h3>
+        </div>
+        <div class="iot-card" aria-label="Studio">
+            <div class="ripple-container" style="animation-delay: 1.5s;">
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+                <span class="ripple"></span>
+            </div>
+            <i class="fas fa-desktop iot-icon"></i>
+            <h3>Studio</h3>
+        </div>
+    </div>
+</section>
+<style>
+    .iot-solution {
+    padding: 100px 20px;
+    background: #F9F9F9;
+    text-align: center;
+    opacity: 0;
+    animation: showFallback 1s ease forwards 0.5s;
+}
+
+.iot-solution h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #FF6200;
+    margin-bottom: 40px;
+}
+
+.iot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.iot-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.iot-card:hover {
+    transform: scale(1.05);
+}
+
+.iot-icon {
+    font-size: 32px;
+    color: #FF6200;
+    margin-bottom: 15px;
+    display: block;
+    position: relative;
+    z-index: 2;
+    animation: pulse 0.5s ease-in-out;
+}
+
+.iot-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.ripple-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: translate(-50%, -50%);
+    height: rgba(255, 98, 0, 0.3);
+    border-radius: 50%;
+    background: scale(0);
+    opacity: 0.8;
+    animation: ripple-effect 2s ease-out infinite;
+}
+
+.ripple:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.ripple:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+@keyframes ripple-effect {
+    0% {
+        transform: scale(0);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(3);
+        opacity: 0;
+    }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+@media (max-width: 768px) {
+    .iot-solution {
+        padding: 60px 15px;
+    }
+
+    .iot-solution h2 {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .iot-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .iot-card {
+        padding: 15px;
+    }
+
+    .iot-icon {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .iot-card h3 {
+        font-size: 16px;
+    }
+
+    .ripple-container {
+        width: 80%;
+        height: 80px;
+    }
+}
+</style>
+
+
+
+    <!-- Project Details Section (unchanged) -->
+    <section class="project-details">
+        <h2>Project Overview</h2>
+        <div class="content">
+            <div class="card">
+                <h3>About the Project</h3>
+                <p>The Smart Home IoT System is a cutting-edge solution that brings intelligent automation to modern homes. Powered by the ESP32 microcontroller, it allows seamless control and monitoring of home devices through a custom mobile app. Designed for scalability, security, and energy efficiency, this project redefines smart living.</p>
+            </div>
+            <div class="card">
+                <h3>Key Features</h3>
+                <ul>
+                    <li>Remote control of lighting and appliances via a mobile app.</li>
+                    <li>Real-time monitoring of home security systems.</li>
+                    <li>Automated scheduling for energy-efficient operation.</li>
+                    <li>Secure communication using MQTT protocol.</li>
+                    <li>Integration with voice assistants like Alexa and Google Home.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Details Section (unchanged) -->
+    <section class="technical-details">
+        <h2>Technical Stack</h2>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <i class="fas fa-microchip"></i>
+                <p>ESP32 Microcontroller</p>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-code"></i>
+                <p>C++ (Arduino Framework)</p>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-mobile-alt"></i>
+                <p>React Native (Mobile App)</p>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-network-wired"></i>
+                <p>MQTT Protocol</p>
+            </div>
+            <div class="tech-item">
+                <i class="fas fa-server"></i>
+                <p>Node.js (Backend)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Calculator Section (unchanged) -->
+    <section id="pricing-calculator" class="pricing-calculator">
+        <h2>Pricing Calculator</h2>
+        <form id="pricing-form">
+            <label for="service">Select a Service:</label>
+            <select id="service" name="service" required>
+                <option value="" disabled selected>Choose a service</option>
+                <option value="iot-website">IoT Website</option>
+                <option value="web3">Web 3.0</option>
+                <option value="cloud">Cloud</option>
+                <option value="firebase">Firebase</option>
+                <option value="saas">SaaS Product</option>
+                <option value="blockchain">Blockchain</option>
+                <option value="fintech">Fintech</option>
+                <option value="no-code">No-Code</option>
+            </select>
+
+            <label id="complexity-label">Complexity:</label>
+            <div class="toggle-group" role="radiogroup" aria-labelledby="complexity-label">
+                <input type="radio" id="complexity-small" name="complexity" value="small" required>
+                <label for="complexity-small">Small</label>
+                <input type="radio" id="complexity-medium" name="complexity" value="medium">
+                <label for="complexity-medium">Medium</label>
+                <input type="radio" id="complexity-large" name="complexity" value="large">
+                <label for="complexity-large">Large</label>
+            </div>
+
+            <label id="size-label">Project Size:</label>
+            <div class="toggle-group" role="radiogroup" aria-labelledby="size-label">
+                <input type="radio" id="size-small" name="project-size" value="small" required>
+                <label for="size-small">Small</label>
+                <input type="radio" id="size-medium" name="project-size" value="medium">
+                <label for="size-medium">Medium</label>
+                <input type="radio" id="size-large" name="project-size" value="large">
+                <label for="size-large">Large</label>
+            </div>
+
+            <label id="speed-label">Speed:</label>
+            <div class="toggle-group" role="radiogroup" aria-labelledby="speed-label">
+                <input type="radio" id="speed-small" name="speed" value="small" required>
+                <label for="speed-small">> 1 month</label>
+                <input type="radio" id="speed-medium" name="speed" value="medium">
+                <label for="speed-medium">> 2 months</label>
+                <input type="radio" id="speed-large" name="speed" value="large">
+                <label for="speed-large">> 5 months</label>
+            </div>
+
+            <div class="price-display-box" id="price-display">Estimated Price: $0</div>
+            <a href="#contact" class="book-call">Book a Call</a>
+        </form>
+    </section>
+
+    <!-- Call to Action (unchanged) -->
+    <section id="contact" class="cta-section">
+        <h2>Discover More Innovations</h2>
+        <a href="#portfolio" class="cta">Back to Portfolio</a>
+    </section>
+
+    <!-- Footer (unchanged) -->
+    <footer>
+        <p>© 2025 Siddarth. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Demo Modal -->
+    <div class="demo-modal" id="demo-modal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header-left">
+                    <img src="images/logo1.png" alt="Siddarth Logo">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="modal-header-right">
+                    <span class="made-by">Made by Siddarth</span>
+                    <span class="visitor-count" id="visitor-count">Visitors: 0</span>
+                    <span class="like-button" id="like-button" data-liked="false" aria-label="Like this demo">
+                        <i class="far fa-heart"></i>
+                        <span id="like-count">0</span>
+                    </span>
+                </div>
+            </div>
+            <iframe id="modal-iframe" title="Website Demo" aria-label="Interactive website demo" scrolling="yes" allowfullscreen></iframe>
+            <i class="fas fa-times modal-close" aria-label="Close modal"></i>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navList = document.getElementById('nav-list');
+        mobileToggle.addEventListener('click', () => {
+            const isExpanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+            navList.classList.toggle('active');
+            mobileToggle.setAttribute('aria-expanded', !isExpanded);
+            mobileToggle.textContent = isExpanded ? '☰' : '✕';
+        });
+
+        // Pricing Calculator Logic
+        const pricingForm = document.getElementById('pricing-form');
+        const priceDisplay = document.getElementById('price-display');
+
+        const pricingData = {
+            'iot-website': 2000,
+            'web3': 3000,
+            'cloud': 2500,
+            'firebase': 2200,
+            'saas': 3500,
+            'blockchain': 4000,
+            'fintech': 3800,
+            'no-code': 1500
+        };
+
+        const complexityMultipliers = {
+            'small': 1.0,
+            'medium': 1.5,
+            'large': 2.0
+        };
+
+        const sizeMultipliers = {
+            'small': 1.0,
+            'medium': 2.0,
+            'large': 3.0
+        };
+
+        const speedMultipliers = {
+            'small': 1.5, // > 1 month
+            'medium': 1.0, // > 2 months
+            'large': 0.8  // > 5 months
+        };
+
+        function animatePrice(start, end, duration) {
+            let startTime = null;
+            const step = (timestamp) => {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const current = Math.floor(start + (end - start) * progress);
+                priceDisplay.textContent = `Estimated Price: $${current.toLocaleString()}`;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+            requestAnimationFrame(step);
+        }
+
+        function calculatePrice() {
+            const service = document.getElementById('service').value;
+            const complexity = document.querySelector('input[name="complexity"]:checked')?.value;
+            const projectSize = document.querySelector('input[name="project-size"]:checked')?.value;
+            const speed = document.querySelector('input[name="speed"]:checked')?.value;
+
+            if (service && complexity && projectSize && speed) {
+                const basePrice = pricingData[service];
+                const price = basePrice * complexityMultipliers[complexity] * sizeMultipliers[projectSize] * speedMultipliers[speed];
+                const currentPrice = parseInt(priceDisplay.textContent.replace(/[^0-9]/g, '')) || 0;
+                animatePrice(currentPrice, Math.round(price), 1000);
+            } else {
+                console.log('Missing inputs:', { service, complexity, projectSize, speed });
+                animatePrice(parseInt(priceDisplay.textContent.replace(/[^0-9]/g, '')) || 0, 0, 500);
+            }
+        }
+
+        pricingForm.addEventListener('change', calculatePrice);
+
+        // Demo Section Modal Logic
+        const demoExpands = document.querySelectorAll('.demo-expand');
+        const demoModal = document.getElementById('demo-modal');
+        const modalIframe = document.getElementById('modal-iframe');
+        const modalClose = document.querySelector('.modal-close');
+        const visitorCount = document.getElementById('visitor-count');
+        const likeButton = document.getElementById('like-button');
+        const likeCount = document.getElementById('like-count');
+        const likeIcon = likeButton.querySelector('i');
+
+        // Initialize visitor counter
+        let visitors = parseInt(localStorage.getItem('demo_visitors')) || 0;
+        visitorCount.textContent = `Visitors: ${visitors}`;
+
+        demoExpands.forEach((expand, index) => {
+            expand.addEventListener('click', () => {
+                const url = expand.getAttribute('data-url');
+                const demoId = expand.getAttribute('data-demo-id');
+
+                // Increment visitor count
+                visitors += 1;
+                localStorage.setItem('demo_visitors', visitors);
+                visitorCount.textContent = `Visitors: ${visitors}`;
+
+                // Load like state for this demo
+                const likes = parseInt(localStorage.getItem(`${demoId}_likes`)) || 0;
+                const isLiked = localStorage.getItem(`${demoId}_liked`) === 'true';
+                likeCount.textContent = likes;
+                likeButton.setAttribute('data-liked', isLiked);
+                likeIcon.className = isLiked ? 'fas fa-heart' : 'far fa-heart';
+                likeButton.setAttribute('data-demo-id', demoId);
+
+                // Open modal
+                modalIframe.setAttribute('src', url);
+                demoModal.classList.add('active');
+                modalIframe.focus();
+                document.body.style.overflow = 'hidden';
+                console.log(`Modal opened for ${demoId} with URL: ${url}`);
+            });
+        });
+
+        // Like button toggle
+        likeButton.addEventListener('click', () => {
+            const demoId = likeButton.getAttribute('data-demo-id');
+            let isLiked = likeButton.getAttribute('data-liked') === 'true';
+            let likes = parseInt(likeCount.textContent) || 0;
+
+            isLiked = !isLiked;
+            likes = isLiked ? likes + 1 : likes - 1;
+
+            likeButton.setAttribute('data-liked', isLiked);
+            likeIcon.className = isLiked ? 'fas fa-heart' : 'far fa-heart';
+            likeCount.textContent = likes;
+
+            localStorage.setItem(`${demoId}_likes`, likes);
+            localStorage.setItem(`${demoId}_liked`, isLiked);
+            console.log(`Like toggled for ${demoId}: ${isLiked ? 'Liked' : 'Unliked'}, Likes: ${likes}`);
+        });
+
+        modalClose.addEventListener('click', () => {
+            demoModal.classList.remove('active');
+            modalIframe.setAttribute('src', ''); // Clear iframe src
+            document.body.style.overflow = '';
+            console.log('Modal closed');
+        });
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && demoModal.classList.contains('active')) {
+                demoModal.classList.remove('active');
+                modalIframe.setAttribute('src', '');
+                document.body.style.overflow = '';
+                console.log('Modal closed via Escape');
+            }
+        });
+
+        // Section Animations on Scroll
+        const animations = ['fadeIn', 'scaleUp', 'rotateIn', 'bounceIn', 'zoomIn'];
+        const sections = document.querySelectorAll('.hero, .demo-section, .project-details, .technical-details, .pricing-calculator, .cta-section, footer');
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const selectedAnimation = animations[Math.floor(Math.random() * animations.length)];
+                    entry.target.style.animation = `${selectedAnimation} 0.8s ease forwards`;
+                    observer.unobserve(entry.target);
+                    console.log(`Section animated: ${entry.target.id || entry.target.tagName}`);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            observer.observe(section);
+        });
+
+        // Debug: Check if sections are found
+        console.log(`Found ${sections.length} sections for animation`);
+    </script>
+</body>
+</html>
