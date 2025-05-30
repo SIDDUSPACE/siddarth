@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover Siddarth's innovative IoT projects for smart living and automation.">
+    <title>IoT Projects - Siddarth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #FFFFFF;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo-container img {
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FF6200;
+            border-bottom: 2px solid #FF6200;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            background: linear-gradient(135deg, #FFFFFF 70%, #FF6200 100%);
+            opacity: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #333333;
+            max-width: 700px;
+        }
+
+        /* Project Categories Section */
+        .project-categories {
+            padding: 80px 50px;
+            background: #F9F9F9;
+            text-align: center;
+        }
+
+        .project-categories h2 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        .category-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-item {
+            padding: 15px 30px;
+            background: #FFFFFF;
+            border: 2px solid #FF6200;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #000000;
+            cursor: pointer;
+            transition: background 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .category-item:hover {
+            background: #FF6200;
+            color: #FFFFFF;
+            transform: scale(1.05);
+        }
+
+        .category-item.active {
+            background: #FF6200;
+            color: #FFFFFF;
+        }
+
+        /* IoT Projects Section */
+        .iot-projects {
+            padding: 80px 50px;
+            background: #FFFFFF;
+            text-align: center;
+        }
+
+        .iot-projects h2 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        .iot-project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .iot-project-card {
+            position: relative;
+            background: #FFFFFF;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            height: 480px;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .iot-project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .iot-project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .iot-project-card img {
+            width: 100%;
+            height: 55%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .iot-project-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .iot-project-card .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: #FFFFFF;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .iot-project-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .iot-project-card .overlay h3 {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .iot-project-card .overlay p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .iot-project-card .overlay a {
+            padding: 10px 20px;
+            background: #FF6200;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+            align-self: flex-start;
+        }
+
+        .iot-project-card .overlay a:hover {
+            background: #000000;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 50px;
+            background: #F9F9F9;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            padding: 30px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-card p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card h4 {
+            font-size: 18px;
+            color: #FF6200;
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 50px;
+            background: #FFFFFF;
+            text-align: center;
+        }
+
+        .faq h2 {
+            font-size: 36px;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .faq-item {
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .faq-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-item h3 {
+            font-size: 20px;
+            color: #000000;
+            margin-bottom: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-item h3::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: #FF6200;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active h3::after {
+            transform: rotate(180deg);
+        }
+
+        .faq-item p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active p {
+            display: block;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, #FF6200 0%, #000000 100%);
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section a {
+            padding: 15px 30px;
+            background: #FFFFFF;
+            color: #FF6200;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .cta-section a:hover {
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        /* Footer */
+        footer {
+            padding: 20px;
+            text-align: center;
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        footer p {
+            font-size: 16px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .project-categories, .iot-projects, .testimonials, .faq, .cta-section {
+                padding: 40px 20px;
+            }
+
+            .iot-project-grid, .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .iot-project-card {
+                height: 400px;
+            }
+
+            .category-list {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .category-item {
+                width: 80%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-container">
+            <img src="images/logo1.png" alt="Logo">
+            <div class="logo">Siddarth</div>
+        </div>
+        <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#portfolio">Portfolio</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>IoT Projects</h1>
+        <p>Explore innovative IoT solutions for smart living and automation</p>
+    </section>
+
+
+   <section class="iot-signal-animation">
+    <div class="signal-container">
+        <div class="cloud">
+            <i class="fas fa-cloud"></i>
+        </div>
+        <div class="signal-path">
+            <svg class="signal-line to-cloud">
+                <path d="M150 280 Q240 150 300 50" fill="none" stroke="#FF6200" stroke-width="2" stroke-dasharray="5,5"/>
+            </svg>
+            <svg class="signal-line to-phone">
+                <path d="M300 50 Q420 150 450 280" fill="none" stroke="#FF6200" stroke-width="2" stroke-dasharray="5,5"/>
+            </svg>
+            <div class="signal-particle particle-to-cloud"></div>
+            <div class="signal-particle particle-to-phone"></div>
+        </div>
+        <div class="device iot-device">
+            <i class="fas fa-microchip"></i>
+        </div>
+        <div class="device car" style="display: none;">
+            <i class="fas fa-car"></i>
+        </div>
+        <div class="device smartwatch" style="display: none;">
+            <i class="fas fa-watch"></i>
+        </div>
+        <div class="device ev-station" style="display: none;">
+            <i class="fas fa-charging-station"></i>
+        </div>
+        <div class="phone">
+            <i class="fas fa-mobile-alt"></i>
+            <div class="received-message">Signal Received</div>
+        </div>
+    </div>
+    <div class="content-panel">
+        <div class="content-header">
+            <h2>ConnectSphere: Future-Ready IoT Solutions</h2>
+            <p>Connect devices effortlessly with speed, security, and precision.</p>
+        </div>
+        <div class="feature-stack">
+            <div class="feature-card">
+                <i class="fas fa-bolt"></i>
+                <div class="feature-text">
+                    <h3>Blazing Speed</h3>
+                    <p>Real-time data transfer for instant responses.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <div class="feature-text">
+                    <h3>Uncompromised Security</h3>
+                    <p>Advanced encryption keeps your data safe.</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-globe"></i>
+                <div class="feature-text">
+                    <h3>Global Sync</h3>
+                    <p>Seamless connectivity across all platforms.</p>
+                </div>
+            </div>
+        </div>
+        <a href="index.html#contact" class="cta-button">Launch Your IoT Journey</a>
+    </div>
+</section>
+<style>
+    /* IoT Signal Animation and separate Section */
+.iot-signal-animation {
+    padding: 80px 50px;
+    background: linear-gradient(135deg, #f9f9f9 0%, #e0e0e0 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    gap: 50px;
+    flex-wrap: wrap;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.iot-signal-animation.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.signal-container {
+    position: relative;
+    width: 600px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Cloud Styling */
+.cloud {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 80px;
+    color: #FF6200;
+    animation: float 3s ease-in-out infinite, glow 1.5s ease-in-out infinite alternate;
+}
+
+.cloud i {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Device Styling (General) */
+.device {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    font-size: 60px;
+    color: #000000;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    opacity: 1;
+}
+
+.device.hidden {
+    opacity: 0;
+    transform: scale(0.8);
+    display: none;
+}
+
+.device i {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.iot-device, .car, .smartwatch, .ev-station {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Phone Styling */
+.phone {
+    position: absolute;
+    bottom: 0;
+    right: 20%;
+    font-size: 60px;
+    color: #000000;
+    animation: vibrate 0.3s ease-in-out infinite alternate;
+}
+
+.phone i {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+/* Received Message */
+.received-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(255, 255, 255, 0.95);
+    color: #000000;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.received-message.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Signal Path and Particles */
+.signal-path {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.signal-line {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+}
+
+.signal-line path {
+    stroke-dasharray: 5, 5;
+    stroke-dashoffset: 1000;
+    stroke-linecap: round;
+}
+
+.signal-line.active path {
+    animation: drawLine 1s linear forwards;
+}
+
+.signal-particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #FF6200 30%, rgba(255, 98, 0, 0.2) 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 98, 0, 0.9), 0 0 20px rgba(255, 98, 0, 0.5);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+}
+
+.signal-particle::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, rgba(255, 98, 0, 0.6) 30%, rgba(255, 98, 0, 0) 70%);
+    border-radius: 50%;
+    opacity: 0;
+    animation: trailFade 0.5s ease-out infinite;
+    z-index: -1;
+}
+
+.signal-particle.active {
+    opacity: 1;
+}
+
+/* Content Panel Styling */
+.content-panel {
+    max-width: 400px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.content-panel:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.content-header h2 {
+    font-size: 30px;
+    color: #000000;
+    margin-bottom: 12px;
+    font-weight: 700;
+    position: relative;
+}
+
+.content-header h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: #FF6200;
+    border-radius: 2px;
+}
+/*write the content of he header part*/
+.content-header p {
+    font-size: 16px;
+    color: #333333;
+    line-height: 1.5;
+    margin-bottom: 24px;
+}
+
+.feature-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.feature-card {
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.loaded .feature-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.loaded .feature-card:nth-child(1) { transition-delay: 0.2s; }
+.loaded .feature-card:nth-child(2) { transition-delay: 0.4s; }
+.loaded .feature-card:nth-child(3) { transition-delay: 0.6s; }
+
+.feature-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(255, 98, 0, 0.2);
+    background: linear-gradient(90deg, #FF6200, #FF8C00);
+}
+
+.feature-card i {
+    font-size: 28px;
+    color: #FF6200;
+    margin-right: 16px;
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover i {
+    color: #FFFFFF;
+}
+
+.feature-text h3 {
+    font-size: 18px;
+    color: #000000;
+    margin-bottom: 4px;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.feature-text p {
+    font-size: 14px;
+    color: #333333;
+    margin: 0;
+    transition: color 0.3s ease;
+}
+
+.feature-card:hover .feature-text h3,
+.feature-card:hover .feature-text p {
+    color: #FFFFFF;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(90deg, #FF6200, #FF8C00);
+    color: #FFFFFF;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.cta-button:hover {
+    background: #000000;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -12px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes vibrate {
+    0% { transform: translateX(0) rotate(0deg); }
+    100% { transform: translateX(0) rotate(2deg); }
+}
+
+@keyframes glow {
+    0% { filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3)); }
+    100% { filter: drop-shadow(0 4px 12px rgba(255, 98, 0, 0.5)); }
+}
+
+@keyframes drawLine {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes trailFade {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .iot-signal-animation {
+        padding: 40px 20px;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .signal-container {
+        width: 100%;
+        height: 250px;
+        margin-bottom: 20px;
+        transform: scale(0.7);
+        transform-origin: center;
+    }
+
+    .cloud { font-size: 50px; }
+    .device { font-size: 40px; left: 15%; }
+    .phone { font-size: 40px; right: 15%; }
+    .received-message { font-size: 12px; padding: 6px 10px; }
+
+    .signal-line path {
+        stroke-width: 1.5;
+    }
+
+    .signal-particle {
+        width: 8px;
+        height: 8px;
+    }
+
+    .signal-particle::after {
+        width: 6px;
+        height: 6px;
+    }
+
+    .content-panel {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .content-header {
+        text-align: center;
+    }
+
+    .content-header h2 {
+        font-size: 24px; /* Adjusted for longer heading */
+    }
+
+    .content-header h2::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .feature-card {
+        padding: 12px;
+    }
+
+    .feature-card i {
+        font-size: 24px;
+        margin-right: 12px;
+    }
+
+    .cta-button {
+        padding: 12px 20px;
+    }
+}
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const signalSection = document.querySelector('.iot-signal-animation');
+    const devices = [
+        document.querySelector('.iot-device'),
+        document.querySelector('.car'),
+        document.querySelector('.smartwatch'),
+        document.querySelector('.ev-station')
+    ];
+    const signalLineToCloud = document.querySelector('.signal-line.to-cloud path');
+    const signalLineToPhone = document.querySelector('.signal-line.to-phone path');
+    const particleToCloud = document.querySelector('.particle-to-cloud');
+    const particleToPhone = document.querySelector('.particle-to-phone');
+    const receivedMessage = document.querySelector('.received-message');
+
+    let currentDeviceIndex = 0;
+
+    // Page load transition
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            signalSection.classList.add('loaded');
+        }, 100);
+    });
+
+    // Intersection Observer for section visibility
+    const observerOptions = {
+        threshold: 0.2,
+        rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                startAnimationSequence();
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    observer.observe(signalSection);
+
+    // Easing function for smooth animation
+    function easeInOut(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    // Animate particle along SVG path
+    function animateParticleAlongPath(particle, path, duration, delay = 0) {
+        const pathLength = path.getTotalLength();
+        particle.style.opacity = 1;
+        particle.classList.add('active');
+
+        const startTime = performance.now() + delay;
+
+        function update(time) {
+            const elapsed = (time - startTime) / duration;
+            const progress = Math.min(easeInOut(elapsed), 1);
+            const point = path.getPointAtLength(progress * pathLength);
+
+            particle.style.left = `${point.x}px`;
+            particle.style.top = `${point.y}px`;
+            particle.style.transform = `translate(-50%, -50%) scale(${1 + 0.2 * Math.sin(progress * Math.PI)}`;
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                particle.style.opacity = 0;
+                particle.classList.remove('active');
+            }
+        }
+
+        requestAnimationFrame(update);
+    }
+
+    // Animation sequence
+    function startAnimationSequence() {
+        function animateDevice() {
+            // Reset all devices to hidden
+            devices.forEach(device => {
+                device.classList.add('hidden');
+                device.style.display = 'none';
+            });
+
+            // Show current device
+            const currentDevice = devices[currentDeviceIndex];
+            currentDevice.style.display = 'block';
+            setTimeout(() => {
+                currentDevice.classList.remove('hidden');
+            }, 10);
+
+            // Signal to cloud
+            setTimeout(() => {
+                signalLineToCloud.parentElement.classList.add('active');
+                animateParticleAlongPath(particleToCloud, signalLineToCloud, 1000);
+            }, 0);
+
+            // Signal to phone
+            setTimeout(() => {
+                signalLineToPhone.parentElement.classList.add('active');
+                animateParticleAlongPath(particleToPhone, signalLineToPhone, 1000);
+            }, 500);
+
+            // Show message
+            setTimeout(() => {
+                receivedMessage.classList.add('show');
+            }, 1000);
+
+            // Preload next device and reset
+            setTimeout(() => {
+                receivedMessage.classList.remove('show');
+                signalLineToCloud.parentElement.classList.remove('active');
+                signalLineToPhone.parentElement.classList.remove('active');
+
+                // Move to next device
+                currentDeviceIndex = (currentDeviceIndex + 1) % devices.length;
+
+                // Start next device immediately
+                animateDevice();
+            }, 1500);
+        }
+
+        animateDevice();
+    }
+});
+</script>
+
+    <!-- Project Categories Section -->
+    <section class="project-categories">
+        <h2>Project Categories</h2>
+        <div class="category-list">
+            <div class="category-item active" data-category="all">All</div>
+            <div class="category-item" data-category="security">Security</div>
+            <div class="category-item" data-category="home-automation">Home Automation</div>
+            <div class="category-item" data-category="energy">Energy Management</div>
+            <div class="category-item" data-category="drones">Drones</div>
+        </div>
+    </section>
+
+    <!-- IoT Projects Section -->
+    <section class="iot-projects">
+        <h2>Our IoT Projects</h2>
+        <div class="iot-project-grid">
+            <div class="iot-project-card" data-category="security">
+                <img src="images/motion-detection.jpg" alt="Motion Detection">
+                <div class="overlay">
+                    <h3>Motion Detection System</h3>
+                    <p>IoT-based security system using PIR sensors to detect motion and send instant alerts.</p>
+                    <a href="#contact">View Details</a>
+                </div>
+            </div>
+            <div class="iot-project-card" data-category="home-automation">
+                <img src="images/smart-home.jpg" alt="Smart Home">
+                <div class="overlay">
+                    <h3>Smart Home Automation</h3>
+                    <p>Control home appliances remotely using ESP32 and a mobile app interface.</p>
+                    <a href="#contact">View Details</a>
+                </div>
+            </div>
+            <div class="iot-project-card" data-category="energy">
+                <img src="images/smart-meter.jpg" alt="Smart Meter">
+                <div class="overlay">
+                    <h3>Smart Energy Meter</h3>
+                    <p>Monitor and manage energy consumption in real-time with IoT integration.</p>
+                    <a href="#contact">View Details</a>
+                </div>
+            </div>
+            <div class="iot-project-card" data-category="home-automation">
+                <img src="images/esp8266-projects.jpg" alt="ESP8266 Projects">
+                <div class="overlay">
+                    <h3>ESP8266 IoT Projects</h3>
+                    <p>Cost-effective IoT solutions for home automation using ESP8266 modules.</p>
+                    <a href="#contact">View Details</a>
+                </div>
+            </div>
+            <div class="iot-project-card" data-category="drones">
+                <img src="images/smart-drone.jpg" alt="Smart Drone">
+                <div class="overlay">
+                    <h3>Smart Drone</h3>
+                    <p>IoT-enabled drone for surveillance and real-time data streaming.</p>
+                    <a href="#contact">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h2>Client Testimonials</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Siddarth's IoT solutions transformed our home into a smart ecosystem. The automation system is seamless and user-friendly!"</p>
+                <h4>Jane Doe</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"The motion detection system Siddarth developed for our office is highly reliable. Excellent work and great support!"</p>
+                <h4>John Smith</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"Working with Siddarth on our energy meter project was a pleasure. His expertise in IoT is unmatched."</p>
+                <h4>Emily Brown</h4>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <h3>What types of IoT projects do you offer?</h3>
+                <p>I provide solutions in home automation, security, energy management, and drone technology, tailored to your needs.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How long does it take to develop an IoT project?</h3>
+                <p>Project timelines vary, but most take 4-12 weeks depending on complexity and requirements.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Do you provide support after project completion?</h3>
+                <p>Yes, I offer ongoing maintenance and support to ensure your IoT systems run smoothly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <h2>Ready to Build Your IoT Solution?</h2>
+        <p>Contact me today to discuss your project and bring your ideas to life with cutting-edge IoT technology.</p>
+        <a href="index.html#contact">Get in Touch</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Siddarth. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth Scroll for Navigation
+        document.querySelectorAll('nav ul li a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('href');
+                if (target.startsWith('index.html#')) {
+                    window.location.href = target;
+                }
+            });
+        });
+
+        // Fade-in Animation for Sections and Cards
+        const elements = document.querySelectorAll('.iot-project-card, .testimonial-card, .faq-item');
+        const options = {
+            threshold: 0.2,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, options);
+
+        elements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Category Filter
+        const categoryItems = document.querySelectorAll('.category-item');
+        const projectCards = document.querySelectorAll('.iot-project-card');
+
+        categoryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Update active class
+                categoryItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+
+                // Filter projects
+                const category = item.getAttribute('data-category');
+                projectCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    if (category === 'all' || cardCategory === category) {
+                        card.style.display = 'block';
+                        card.classList.remove('visible');
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 100);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const header = item.querySelector('h3');
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('p').style.display = 'none';
+                });
+                if (!isActive) {
+                    item.classList.add('active');
+                    item.querySelector('p').style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website Project - Siddarth</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: #FFFFFF;
+            color: #000000;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background: #FFFFFF;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo-container img {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        nav .logo-container .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #000000;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000000;
+            font-weight: 600;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FF6200;
+            border-bottom: 2px solid #FF6200;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 80px;
+            width: 100%;
+            height: 5px;
+            background: #F9F9F9;
+            z-index: 99;
+        }
+
+        .progress-bar {
+            height: 5px;
+            background: #FF6200;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Project Hero Section */
+        .project-hero {
+            padding: 140px 50px 100px;
+            text-align: center;
+            background: linear-gradient(135deg, #F9F9F9 0%, #FFE8D6 100%);
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 98, 0, 0.15) 0%, transparent 70%);
+            animation: pulse 15s infinite ease-in-out;
+            z-index: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0.3; }
+            100% { transform: scale(1); opacity: 0.5; }
+        }
+
+        .project-hero .content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .project-hero h1 {
+            font-size: 52px;
+            color: #000000;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .project-hero p {
+            font-size: 20px;
+            color: #333333;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+        }
+
+        .project-hero .cta {
+            padding: 12px 30px; /* Reduced padding for smaller size */
+            background: #FF6200;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px; /* Reduced font size */
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s, background 0.3s, box-shadow 0.3s;
+        }
+
+        .project-hero .cta:hover {
+            background: #000000;
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .project-hero.visible h1,
+        .project-hero.visible p,
+        .project-hero.visible .cta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Project Details Section */
+        .project-details {
+            padding: 100px 50px;
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            background: #FFFFFF;
+            align-items: center;
+        }
+
+        .project-details .content {
+            max-width: 600px;
+            background: #F9F9F9;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .project-details h2 {
+            font-size: 38px;
+            color: #000000;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .project-details p {
+            font-size: 18px;
+            color: #333333;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .project-details p strong {
+            color: #FF6200;
+        }
+
+        .project-details .image-container {
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .project-details .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .project-details .image-container:hover img {
+            transform: scale(1.1);
+        }
+
+        .project-details.visible .content,
+        .project-details.visible .image-container {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            text-align: center;
+            background: #F9F9F9;
+        }
+
+        .features h2 {
+            font-size: 38px;
+            color: #000000;
+            margin-bottom: 50px;
+            font-weight: 700;
+        }
+
+        .features .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features .feature-item {
+            padding: 40px;
+            background: #FFFFFF;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .features .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .features .feature-item i {
+            font-size: 45px;
+            color: #FF6200;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .features .feature-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .features .feature-item h3 {
+            font-size: 26px;
+            color: #000000;
+            margin-bottom: 15px;
+        }
+
+        .features .feature-item p {
+            font-size: 16px;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        .feature-item:nth-child(1) {
+            border-left: 5px solid #FF6200;
+        }
+
+        .feature-item:nth-child(2) {
+            background: linear-gradient(135deg, #FFFFFF 70%, #FFE8D6 100%);
+        }
+
+        .feature-item:nth-child(3) {
+            border-top: 5px solid #FF6200;
+        }
+
+        /* Call to Action Section */
+        .cta-section {
+            padding: 100px 50px;
+            text-align: center;
+            background: linear-gradient(135deg, #FFFFFF 0%, #F9F9F9 100%);
+            position: relative;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 98, 0, 0.1) 0%, transparent 70%);
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .cta-section .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 38px;
+            color: #000000;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            color: #333333;
+            margin-bottom: 35px;
+            line-height: 1.7;
+        }
+
+        .cta-section .cta {
+            padding: 15px 40px;
+            background: #FF6200;
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+
+        .cta-section .cta:hover {
+            background: #000000;
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px;
+            text-align: center;
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        footer p {
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            .progress-container {
+                top: 60px;
+            }
+
+            .project-hero {
+                padding: 100px 20px 60px;
+                min-height: 400px;
+            }
+
+            .project-hero h1 {
+                font-size: 36px;
+            }
+
+            .project-hero p {
+                font-size: 16px;
+            }
+
+            .project-hero .cta {
+                font-size: 14px; /* Smaller font size for mobile */
+                padding: 10px 25px; /* Smaller padding for mobile */
+            }
+
+            .project-details {
+                flex-direction: column;
+                text-align: center;
+                padding: 60px 20px;
+                gap: 40px;
+            }
+
+            .project-details .content,
+            .project-details .image-container {
+                max-width: 100%;
+            }
+
+            .project-details .content {
+                padding: 30px;
+            }
+
+            .features {
+                padding: 60px 20px;
+            }
+
+            .features .feature-list {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo-container">
+            <img src="images/logo1.png" alt="Logo">
+            <div class="logo">Siddarth</div>
+        </div>
+        <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#skills">Skills</a></li>
+            <li><a href="index.html#portfolio">Portfolio</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
+    <!-- Project Hero Section -->
+    <section class="project-hero">
+        <div class="content">
+            <h1>Portfolio Website</h1>
+            <p>A modern, responsive portfolio website crafted to showcase my expertise in web development, built with HTML, CSS, and JavaScript.</p>
+            <a href="#contact" class="cta">View Live Demo</a>
+        </div>
+    </section>
+
+    <!-- Project Details Section -->
+    <section class="project-details">
+        <div class="content">
+            <h2>Project Overview</h2>
+            <p>This portfolio website is a digital showcase of my skills in web development and IoT solutions. It features a clean, modern design with responsive layouts, smooth scroll-based animations, and an intuitive user interface.</p>
+            <p><strong>Technologies Used:</strong> HTML5, CSS3, JavaScript</p>
+            <p><strong>Key Challenges:</strong> Achieving cross-browser compatibility, optimizing load times, and integrating dynamic animations for a seamless experience.</p>
+        </div>
+        <div class="image-container">
+            <img src="images/images3.png" alt="Portfolio Website Screenshot">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2>Key Features</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <i class="fas fa-mobile-alt"></i>
+                <h3>Responsive Design</h3>
+                <p>Seamlessly adapts to all screen sizes, ensuring a consistent experience across devices.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-bolt"></i>
+                <h3>Performance Optimized</h3>
+                <p>Fast load times achieved through optimized assets and clean, efficient code.</p>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-magic"></i>
+                <h3>Dynamic Animations</h3>
+                <p>Engaging scroll-triggered animations enhance the user experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section class="cta-section">
+        <div class="content">
+            <h2>Ready to Build Your Own Website?</h2>
+            <p>Let’s collaborate to create a stunning, high-performance website tailored to your needs.</p>
+            <a href="index.html#contact" class="cta">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Siddarth. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth Scroll for Navigation and CTA
+        document.querySelectorAll('nav ul li a, .project-hero .cta').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Animation on Scroll for Sections
+        const sections = document.querySelectorAll('section');
+        const sectionOptions = {
+            threshold: 0.1
+        };
+
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, sectionOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.querySelector('.progress-bar').style.width = scrollPercent + '%';
+        });
+    </script>
+</body>
+</html>
